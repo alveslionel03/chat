@@ -20,6 +20,11 @@ interface ChatMessage {
 }
 
 async function chat(messages: ChatMessage[]): Promise<string> {
+  console.log('Request Payload:', JSON.stringify({
+    model: 'gpt-oss-120b',
+    messages: messages
+  }, null, 2));
+
   const response = await fetch(`${BASE_URL}/chat/completions`, {
     method: 'POST',
     headers: {
@@ -37,6 +42,8 @@ async function chat(messages: ChatMessage[]): Promise<string> {
   }
 
   const data = await response.json();
+  console.log('Response Payload:', JSON.stringify(data, null, 2));
+
   return data.choices[0].message.content;
 }
 
